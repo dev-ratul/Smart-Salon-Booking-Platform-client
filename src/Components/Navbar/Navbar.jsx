@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router";
 import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import Chatbot from "../Chatbot/Chatbot";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  console.log(user)
+  const [isOpenChat, setIsOpenChat] = useState(false);
+  console.log(user);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log(isOpenChat);
 
   // ✅ Logout
   const handleLogout = () => {
@@ -34,14 +38,12 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 items-center font-medium">
-            <NavLink
-              to="/elegance-ai"
-              className={({ isActive }) =>
-                isActive ? activeClass : normalClass
-              }
+            <button
+              onClick={() => setIsOpenChat((prev) => !prev)}
+              className="cursor-pointer"
             >
               Elegance AI
-            </NavLink>
+            </button>
             <NavLink
               to="/chic-blog"
               className={({ isActive }) =>
@@ -185,6 +187,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
+      <div>{isOpenChat && <Chatbot setIsOpenChat={isOpenChat} />}</div>
     </nav>
   );
 };
