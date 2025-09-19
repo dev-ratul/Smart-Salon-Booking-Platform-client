@@ -60,6 +60,7 @@ export const router = createBrowserRouter([
         path: '/dashboard/saloon-onboarding',
         Component: SaloonOnboarding,
       },
+      
 
     ]
   }

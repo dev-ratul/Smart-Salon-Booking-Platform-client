@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import usePostData from "../../hooks/api/usePostData";
 import useGetData from "../../hooks/api/useGetData";
 
+
 const fakeData = [
   {
     title: "AI Revolution in Bangladesh",
@@ -33,6 +34,7 @@ const fakeData = [
 ];
 
 const ChicBlog = () => {
+  const getData= useGetData()
 	const { user } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const [expanded, setExpanded] = useState(null);
@@ -53,7 +55,8 @@ const ChicBlog = () => {
 		mutate: createPost, 
 	} = usePostData('posts', 'https://smart-salon-server-new.onrender.com/api/blog/create');
 
-	const { data: blog } = useGetData('blog', 'https://smart-salon-server-new.onrender.com/api/blog/get-all-blog');
+	const { data: blog } = useGetData('blog', 'https://smart-salon-server-new.onrender.com/api/blog/get-all-posts');
+  console.log(blog)
 
 	const onSubmit = (data) => {
 
