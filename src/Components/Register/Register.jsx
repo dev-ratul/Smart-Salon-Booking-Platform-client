@@ -1,3 +1,4 @@
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -46,6 +47,12 @@ const RegisterPremium = () => {
         displayName: finalData.name,
         photoURL: imageUrl || previewImage,
       };
+
+      const res = await axios.post("http://localhost:3000/api/users/register", {
+        ...finalData,
+        photo: imageUrl,
+      });
+      console.log(res, "res");
 
       await updateUserProfile(profileInfo);
 
@@ -105,8 +112,8 @@ const RegisterPremium = () => {
                     Contact number
                   </label>
                   <input
-                    {...register("contact", {
-                      required: "Contact number is required",
+                    {...register("phone", {
+                      required: "Phone number is required",
                       pattern: {
                         value: /^\+8801[3-9]\d{8}$/,
                         message: "Enter a valid BD phone number (+8801XXXXXXX)",
