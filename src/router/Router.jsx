@@ -5,6 +5,8 @@ import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
 import DashboardRoot from "../Pages/Dashboard/DashboardLayout/DashboardRoot";
 import UserTransactionHistory from "../Pages/Dashboard/UserTransactionHistory/UserTransactionHistory";
+import BangladeshMap from "../Components/OurMap/OurMap";
+import ChicBlog from "../Components/Chick/ChicBlog";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +24,16 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         Component: Register
-      } 
+      },
+      {
+        path: '/chic-blog',
+        Component: ChicBlog
+      },
+      {
+        path: '/our-map',
+        Component: BangladeshMap
+      }
+      
       
     ],
   },
