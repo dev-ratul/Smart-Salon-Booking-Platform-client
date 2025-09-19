@@ -7,6 +7,7 @@ import DashboardRoot from "../Pages/Dashboard/DashboardLayout/DashboardRoot";
 import UserTransactionHistory from "../Pages/Dashboard/UserTransactionHistory/UserTransactionHistory";
 import BangladeshMap from "../Components/OurMap/OurMap";
 import ChicBlog from "../Components/Chick/ChicBlog";
+import Saloon from "../Components/Saloon/Saloon";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: '/our-map',
         Component: BangladeshMap
+      },
+      {
+        path: '/saloon',
+        Component: Saloon
       }
       
       
