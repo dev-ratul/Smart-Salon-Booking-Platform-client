@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  console.log(user)
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
