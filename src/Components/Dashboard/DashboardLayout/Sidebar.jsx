@@ -19,7 +19,7 @@ const menuItems = [
   { id: 6, label: 'Customer Request',  icon: GitPullRequest, path: '/' },
   { id: 7, label: 'Saloon Transaction History',  icon: BadgeDollarSign, path: '/' },
   { id: 8, label: 'Admin Message',  icon: Send, path: '/' },
-  { id: 9, label: 'Salon Onboarding',  icon: Settings, path: '/' },
+  { id: 9, label: 'Salon Onboarding',  icon: Settings, path: '/dashboard/saloon-onboarding' },
   { id: 10, label: 'Salon Management',  icon: Settings, path: '/' },
   { id: 11, label: 'User Management',  icon: Settings, path: '/' },
 ]
@@ -39,7 +39,7 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
     className={`
       fixed inset-y-0 top-1/2 left-1 -translate-y-1/2
       flex flex-col 
-      bg-slate-800 text-slate-100
+      bg-slate-900 text-slate-100
       transition-all duration-300
       ${collapsed ? 'w-12' : 'w-64'} h-[98%]
       z-50 overflow-hidden rounded-lg shadow-lg
@@ -93,7 +93,7 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
 
       <hr className='border-0.1 border-solid border-purple-400' />
 
-      <footer className='bg-slate-800 flex justify-start py-4'>
+      <footer className=' flex justify-start py-4'>
         <div 
         className={`relative bottom-0 px-4 flex hover:bg-slate-600 text-slate-100 transition-all duration-300 
         ${collapsed ? 'w-10 justify-center' : 'w-64'} z-50`}>

@@ -7,7 +7,7 @@ const DashboardRoot = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center bg-gradient-to-r from-black via-gray-900 to-black">
       <Sidebar collapsed={collapsed} onCollapse={setCollapsed} />
       
       <main
