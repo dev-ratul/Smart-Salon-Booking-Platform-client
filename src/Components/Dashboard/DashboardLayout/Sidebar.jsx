@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from "react-router"; 
 import {
   Menu as MenuIcon,
   Home,
@@ -11,10 +12,10 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-  { id: 1, label: 'Dashboard', icon: Home,     path: '/' },
-  { id: 2, label: 'Save Post',   icon: User,     path: '/' },
+  { id: 1, label: 'Dashboard', icon: Home, path: '/' },
+  { id: 2, label: 'Save Post',   icon: User, path: '/' },
   { id: 4, label: 'My Booking',  icon: NotebookTabs, path: '/' },
-  { id: 5, label: 'User Transaction History',  icon: BadgeDollarSign, path: '/' },
+  { id: 5, label: 'User Transaction History',  icon: BadgeDollarSign, path: '/dashboard/user-transaction-history' },
   { id: 6, label: 'Customer Request',  icon: GitPullRequest, path: '/' },
   { id: 7, label: 'Saloon Transaction History',  icon: BadgeDollarSign, path: '/' },
   { id: 8, label: 'Admin Message',  icon: Send, path: '/' },
@@ -45,7 +46,9 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
     `}
     >
 
-      <header className={`flex items-center ${collapsed ? "justify-center" : "justify-between" } gap-2 px-4 py-2 bg-slate-900`}>
+      <NavLink 
+      to={'/'}
+      className={`flex items-center ${collapsed ? "justify-center" : "justify-between" } gap-2 px-4 py-2 bg-slate-900`}>
         {!collapsed && 
           <h1
           className="text-2xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500 bg-clip-text text-transparent"
@@ -58,7 +61,7 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
           className="cursor-pointer shrink-0"
           onClick={toggle}
         />
-      </header>
+      </NavLink>
 
       <hr className='border-0.1 border-solid border-purple-400' />
 
@@ -67,9 +70,9 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
           item.map((menu, index) => {
             const Icon = menu.icon;
             return (
-              <a
+              <NavLink 
               key={index}
-              href={menu.path}
+              to={menu.path}
               className={`
                 flex items-center gap-4
                 px-3 py-2
@@ -81,7 +84,7 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
                 <span className={`${collapsed ? 'hidden' : 'inline'} whitespace-nowrap`}>
                   {menu.label}
                 </span>
-              </a>
+              </NavLink >
             )
 
           })
