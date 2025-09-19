@@ -1,27 +1,106 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('./assets/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-family: "Gilroy";
+  src: url("./assets/fonts/Gilroy-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('./assets/fonts/Gilroy-Bold.ttf') format('truetype');
+  font-family: "Gilroy";
+  src: url("./assets/fonts/Gilroy-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('./assets/fonts/Gilroy-Light.ttf') format('truetype');
+  font-family: "Gilroy";
+  src: url("./assets/fonts/Gilroy-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
-    
 
 body {
-    font-family: 'Gilroy', sans-serif;
+  font-family: "Gilroy", sans-serif;
+  position: relative;
 }
+
+.chat-popup {
+  box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+    0 32px 64px -48px rgba(0, 0, 0, 0.5);
+  @apply min-w-[380px] max-w-[380px] overflow-hidden rounded-2xl bg-white absolute top-4/5 right-6;
+}
+
+.chat-popup .chat-header {
+  @apply flex px-4 py-3 items-center justify-between bg-[#6d4fc2];
+}
+
+.chat-header .header-info {
+  @apply flex gap-3 items-center;
+}
+
+.header-info .logo-text {
+  @apply text-2xl font-semibold text-white;
+}
+
+.chat-body {
+  scrollbar-width: thin;
+  scrollbar-color: #ddd3f9 transparent;
+  @apply min-h-[360px] max-h-[360px] overflow-auto px-6 py-5 flex flex-col gap-5;
+}
+
+.chat-body .message {
+  @apply flex items-center gap-3;
+}
+
+.chat-body .message.error .message-text {
+  color: #ff0000;
+}
+
+.chat-body .message .message-text {
+  word-wrap: break-word;
+  white-space: pre-line;
+  font-size: 0.95rem;
+  @apply px-3 py-4  max-w-3/4 bg-[#6d4fc2];
+}
+
+.chat-body .bot-message .message-text {
+  border-radius: 13px 13px 13px 3px;
+  @apply bg-[#f6f2ff];
+}
+
+.chat-body .user-message {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-body .user-message .message-text {
+  border-radius: 13px 13px 2px 13px;
+  @apply bg-[#6d4fc2] text-white;
+}
+
+.chat-footer {
+  padding: 15px 22px 10px;
+  @apply bg-white;
+}
+
+.chat-footer .chat-form {
+  outline: 1px solid #cccce5;
+  @apply flex items-center  w-full rounded-3xl;
+}
+/*
+.chat-form .message-input {
+  padding: 0 17px;
+  font-size: 0.95rem;
+  @apply border-0 outline-0 w-full bg-white text-black placeholder:text-black bg-none h-[47px] rounded-3xl;
+}
+
+.chat-form button {
+  @apply h-[35px] hidden  mr-1 w-[35px] border-0 outline-0 cursor-pointer text-white shrink-0 rounded-full bg-black;
+}
+
+.chat-form .message-input:valid ~ button {
+  display: block;
+} */
