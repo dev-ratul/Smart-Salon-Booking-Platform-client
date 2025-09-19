@@ -1,90 +1,63 @@
-import React, { useState } from "react";
 import { motion } from "framer-motion";
-import useAuth from "../../hooks/useAuth";
-import { toast } from "react-toastify";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
+import { imageUpload } from "../../utilities/imageUpload";
 
 const RegisterPremium = () => {
   const { signUp, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    email: "",
-    image: "",
-    address: "",
-    password: "",
-  });
-
+  const [previewImage, setPreviewImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // ✅ React Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const validate = () => {
-    let newErrors = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        newErrors[key] = `${key} is required`;
-      }
-    });
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+  // ✅ handle image preview
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewURL = URL.createObjectURL(file);
+      setPreviewImage(previewURL);
     }
+  };
 
-    const finalData = { ...formData, role: "user" };
+  // ✅ onSubmit handler
+  const onSubmit = async (data) => {
+    const finalData = { ...data, role: "user" };
+    console.log(finalData);
+    const image = data?.photo[0];
+    const imageUrl = await imageUpload(image);
+    console.log(imageUrl);
 
-    signUp(finalData.email, finalData.password)
-      .then((result) => {
-        console.log(result.user);
+    try {
+      const result = await signUp(finalData.email, finalData.password);
+      console.log(result.user);
 
-        // success হলে form reset
-        setFormData({
-          name: "",
-          contact: "",
-          email: "",
-          image: "",
-          address: "",
-          password: "",
-        });
-        setErrors({});
+      // ✅ update profile
+      const profileInfo = {
+        displayName: finalData.name,
+        photoURL: imageUrl || previewImage,
+      };
 
+      await updateUserProfile(profileInfo);
 
-        const profileInfo = {
-          displayName: finalData.name,
-          photoURL: finalData.image
-        };
+      reset();
+      setPreviewImage(null);
 
-        updateUserProfile(profileInfo)
-          .then(() => {
-            //console.log("update profile");
-          })
-          .catch((error) => {
-            //console.log(error);
-          });
-
-
-
-        navigate("/");
-
-        // toast দেখানো
-        toast.success("Registration successful!");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Registration failed! Try again.");
-      });
+      toast.success("Registration successful!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Registration failed! Try again.");
+    }
   };
 
   return (
@@ -98,7 +71,7 @@ const RegisterPremium = () => {
         >
           <div className="w-full">
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               className="w-full bg-gray-900/60 backdrop-blur-md p-6 rounded-2xl shadow-[0_10px_40px_rgba(99,102,241,0.08)]"
             >
               <h2 className="text-2xl lg:text-3xl font-extrabold text-white mb-2">
@@ -116,14 +89,14 @@ const RegisterPremium = () => {
                     Full name
                   </label>
                   <input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    {...register("name", { required: "Full name is required" })}
                     className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Your full name"
                   />
                   {errors.name && (
-                    <span className="text-red-400 text-sm">{errors.name}</span>
+                    <span className="text-red-400 text-sm">
+                      {errors.name.message}
+                    </span>
                   )}
                 </div>
 
@@ -132,15 +105,19 @@ const RegisterPremium = () => {
                     Contact number
                   </label>
                   <input
-                    name="contact"
-                    value={formData.contact}
-                    onChange={handleChange}
+                    {...register("contact", {
+                      required: "Contact number is required",
+                      pattern: {
+                        value: /^\+8801[3-9]\d{8}$/,
+                        message: "Enter a valid BD phone number (+8801XXXXXXX)",
+                      },
+                    })}
                     className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-pink-500"
                     placeholder="+8801XXXXXXXXX"
                   />
                   {errors.contact && (
                     <span className="text-red-400 text-sm">
-                      {errors.contact}
+                      {errors.contact.message}
                     </span>
                   )}
                 </div>
@@ -153,33 +130,45 @@ const RegisterPremium = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  {...register("email", { required: "Email is required" })}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="you@example.com"
                 />
                 {errors.email && (
-                  <span className="text-red-400 text-sm">{errors.email}</span>
+                  <span className="text-red-400 text-sm">
+                    {errors.email.message}
+                  </span>
                 )}
               </div>
 
-              {/* Image URL */}
-              <div className="mb-4">
-                <label className="block text-sm text-gray-300 mb-2">
-                  Profile Image URL
+              {/* Upload Photo */}
+              <div className="form-control flex flex-col  mb-4">
+                <label className="label font-semibold mb-2 text-gray-300">
+                  Upload Photo
                 </label>
-                <input
-                  type="text"
-                  name="image"
-                  value={formData.image}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="https://example.com/image.jpg"
-                />
-                {errors.image && (
-                  <span className="text-red-400 text-sm">{errors.image}</span>
-                )}
+                <div className="flex gap-2 flex-col">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    {...register("photo", {
+                      required: "Photo is required",
+                      onChange: (e) => handleImageChange(e),
+                    })}
+                    className="file-input file-input-bordered w-fit px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {errors.photo && (
+                    <p className="text-red-500 text-sm">
+                      {errors.photo.message}
+                    </p>
+                  )}
+                  {previewImage && (
+                    <img
+                      className="w-[50px] h-[50px] object-cover rounded-sm"
+                      src={previewImage}
+                      alt="preview"
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Address */}
@@ -189,14 +178,14 @@ const RegisterPremium = () => {
                 </label>
                 <textarea
                   rows="2"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
+                  {...register("address", { required: "Address is required" })}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
                   placeholder="Your address"
                 />
                 {errors.address && (
-                  <span className="text-red-400 text-sm">{errors.address}</span>
+                  <span className="text-red-400 text-sm">
+                    {errors.address.message}
+                  </span>
                 )}
               </div>
 
@@ -207,22 +196,26 @@ const RegisterPremium = () => {
                 </label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   placeholder="Choose a strong password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((s) => !s)}
-                  className="absolute  top-11 cursor-pointer right-3 text-xs text-gray-400"
+                  className="absolute top-11 cursor-pointer right-3 text-xs text-gray-400"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
                 {errors.password && (
                   <span className="text-red-400 text-sm">
-                    {errors.password}
+                    {errors.password.message}
                   </span>
                 )}
               </div>
@@ -238,8 +231,6 @@ const RegisterPremium = () => {
                   Create account
                 </motion.button>
               </div>
-
-              
 
               <p className="text-sm text-gray-400 mt-4 text-center">
                 Already have an account?{" "}
