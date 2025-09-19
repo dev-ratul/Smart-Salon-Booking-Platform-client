@@ -9,6 +9,7 @@ import SaloonOnboarding from "../Pages/Dashboard/SaloonOnboarding/SaloonOnboardi
 import BangladeshMap from "../Components/OurMap/OurMap";
 import ChicBlog from "../Components/Chick/ChicBlog";
 import Saloon from "../Components/Saloon/Saloon";
+import SalonDetails from "../Components/Saloon/SalonDetails";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: '/saloon',
         Component: Saloon
+      },
+      {
+        path: `/saloon/:id`,
+        Component: SalonDetails
       }
       
       
