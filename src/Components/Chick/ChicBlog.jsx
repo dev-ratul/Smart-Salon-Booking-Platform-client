@@ -42,7 +42,7 @@ const ChicBlog = () => {
     content: "",
     image: "",
     category: "",
-    email: user?.email || "anonymous@mail.com",
+    author: user?.email || "anonymous@mail.com",
   });
 
   // handle form inputs
@@ -55,19 +55,36 @@ const ChicBlog = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newPost = {
-      ...postData,
-      
-    };
-    setPosts([newPost, ...posts]);
-    console.log("New Blog Post:", newPost);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // reset
-    setPostData({ title: "", content: "", image: "", category: "", email: user?.email || "anonymous@mail.com" });
-    setIsOpen(false);
+  const newPost = {
+    ...postData,
+    email: user?.email || "anonymous@mail.com",
   };
+
+  try {
+    const res = await fetch("https://smart-salon-server-new.onrender.com/api/blog/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPost),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setPosts([data, ...posts]); // ব্লগ লিস্ট আপডেট
+      setPostData({ title: "", content: "", image: "", category: "", email: user?.email || "anonymous@mail.com" }); // ফর্ম রিসেট
+      setIsOpen(false); // ফর্ম বন্ধ করা
+    } else {
+      console.error("Failed to create post:", data.message);
+    }
+  } catch (error) {
+    console.error("Error creating post:", error);
+  }
+};
+
+
 
   return (
     <section className="relative bg-gradient-to-r from-black via-gray-900 to-black text-white py-20 min-h-screen overflow-hidden">
