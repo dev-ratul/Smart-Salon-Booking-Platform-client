@@ -3,6 +3,7 @@ import Home from "../Pages/Home/Home/Home";
 import { createBrowserRouter } from "react-router";
 import Login from "../Components/Login/Login";
 import Register from "../Components/Register/Register";
+import ChicBlog from "../Components/ChicBlog/ChicBlog";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
         path: '/register',
         Component: Register
       },
+      {
+        path: '/chic-blog',
+        Component: ChicBlog
+      }
       
       
     ],
