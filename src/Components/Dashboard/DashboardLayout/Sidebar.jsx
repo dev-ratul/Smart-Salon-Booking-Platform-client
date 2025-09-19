@@ -45,23 +45,24 @@ const Sidebar = ({ item = menuItems, collapsed: collapsedProp, onCollapse }) => 
       z-50 overflow-hidden rounded-lg shadow-lg
     `}
     >
-
-      <NavLink 
-      to={'/'}
-      className={`flex items-center ${collapsed ? "justify-center" : "justify-between" } gap-2 px-4 py-2 bg-slate-900`}>
-        {!collapsed && 
-          <h1
-          className="text-2xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500 bg-clip-text text-transparent"
-          >
-            Smart<span className="text-white">Salon</span>
-          </h1>
-        }
+      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between" } gap-2 px-4 py-2 bg-slate-900`}>
+        <NavLink 
+        to={'/'}
+        >
+          {!collapsed && 
+            <h1
+            className="text-2xl font-extrabold bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500 bg-clip-text text-transparent"
+            >
+              Smart<span className="text-white">Salon</span>
+            </h1>
+          }
+        </NavLink>
         <MenuIcon
           size={22}
           className="cursor-pointer shrink-0"
           onClick={toggle}
         />
-      </NavLink>
+      </div>
 
       <hr className='border-0.1 border-solid border-purple-400' />
 

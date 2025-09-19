@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Scissors, Sparkles } from "lucide-react";
+import { Link } from "react-router";
 
 const Banner = () => {
   return (
@@ -32,9 +33,9 @@ const Banner = () => {
             <button className="px-8   cursor-pointer py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-[0_0_20px_rgba(236,72,153,0.7)] hover:scale-105 transition transform">
               Book Now
             </button>
-            <button className="px-8 cursor-pointer py-4 rounded-xl border border-purple-400 text-purple-300 font-semibold hover:bg-purple-600/20 hover:text-white transition">
-              Explore Services
-            </button>
+            <Link to={'/chic-blog'} className="px-8 cursor-pointer py-4 rounded-xl border border-purple-400 text-purple-300 font-semibold hover:bg-purple-600/20 hover:text-white transition">
+              Explore Blog
+            </Link>
           </div>
         </motion.div>
 

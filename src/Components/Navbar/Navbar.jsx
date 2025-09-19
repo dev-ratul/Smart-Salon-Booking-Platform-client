@@ -61,12 +61,12 @@ const Navbar = () => {
               OurMap
             </NavLink>
             <NavLink
-              to="/shop"
+              to="/saloon"
               className={({ isActive }) =>
                 isActive ? activeClass : normalClass
               }
             >
-              Salon
+              Saloon
             </NavLink>
             <NavLink
               to="/dashboard"
@@ -145,7 +145,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/shop"
+              to="/saloon"
               className={({ isActive }) =>
                 isActive
                   ? "text-pink-400 font-semibold text-lg border-b-2 border-pink-500"
@@ -153,7 +153,7 @@ const Navbar = () => {
               }
               onClick={() => setIsOpen(false)}
             >
-              Salon
+              Saloon
             </NavLink>
 
             <NavLink
