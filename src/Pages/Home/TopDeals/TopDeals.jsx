@@ -67,7 +67,7 @@ const TopDeals = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-12"
         >
-        <button className="bg-purple-600 hover:bg-purple-500 text-white px-8 py-3 rounded-xl shadow-lg">
+        <button className="bg-purple-600 cursor-pointer hover:bg-purple-500 text-white px-8 py-3 rounded-xl shadow-lg">
             CONTACT US
         </button>
         </motion.div>
