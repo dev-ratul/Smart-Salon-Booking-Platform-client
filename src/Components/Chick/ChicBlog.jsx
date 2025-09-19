@@ -47,26 +47,19 @@ const ChicBlog = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-800/20 via-transparent to-pink-700/10 animate-pulse"></div>
 
       <div className="relative max-w-5xl mx-auto px-6">
-        {/* Heading */}
-        <motion.h2
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-extrabold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-400 to-blue-500"
-        >
-          ChicBlog
-        </motion.h2>
+        
 
-        {/* Button to Open Slider Form */}
+        {/* Input Field to Open Slider Form */}
         <div className="text-center mb-10">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <motion.input
+            type="text"
+            readOnly
+            placeholder="Write a Blog..."
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="px-8 py-3 rounded-full font-bold text-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 shadow-lg hover:opacity-90 transition"
-          >
-            {isOpen ? "Close Form" : "Write a Blog"}
-          </motion.button>
+            className="w-full max-w-lg mx-auto px-6 py-3 rounded-full font-medium text-base bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white placeholder-white/80 shadow-lg cursor-pointer hover:opacity-90 transition"
+          />
         </div>
 
         {/* Slider Form */}
@@ -117,22 +110,6 @@ const ChicBlog = () => {
             </motion.form>
           )}
         </AnimatePresence>
-
-        {/* Blog Posts */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {posts.map((post) => (
-            <motion.div
-              key={post.id}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gray-900/50 p-6 rounded-2xl shadow-[0_0_25px_rgba(168,85,247,0.3)]"
-            >
-              <h3 className="text-2xl font-bold text-pink-400 mb-3">
-                {post.title}
-              </h3>
-              <p className="text-gray-300">{post.content}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -50,7 +50,7 @@ const Navbar = () => {
               ChicBlog
             </NavLink>
             <NavLink
-              to="/map"
+              to="/our-map"
               className={({ isActive }) =>
                 isActive ? activeClass : normalClass
               }
