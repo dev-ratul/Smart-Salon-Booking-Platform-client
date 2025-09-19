@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router';
 
-import { Sidebar, Topbar } from "../../../Components/Dashboard/DashboardLayout"
+import { Sidebar } from "../../../Components/Dashboard/DashboardLayout";
 
 const DashboardRoot = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,8 +18,7 @@ const DashboardRoot = () => {
           p-6
         `}
       >
-        <h2 className="text-2xl font-semibold mb-4">Hello Tailwind Sidebar 👋</h2>
-        <p>Add your routes / content here…</p>
+        <Outlet></Outlet>
       </main>
     </div>
 
