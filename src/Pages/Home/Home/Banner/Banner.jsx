@@ -29,10 +29,10 @@ const Banner = () => {
           </p>
 
           <div className="flex gap-5 justify-center lg:justify-start">
-            <button className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-[0_0_20px_rgba(236,72,153,0.7)] hover:scale-105 transition transform">
+            <button className="px-8   cursor-pointer py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-[0_0_20px_rgba(236,72,153,0.7)] hover:scale-105 transition transform">
               Book Now
             </button>
-            <button className="px-8 py-4 rounded-xl border border-purple-400 text-purple-300 font-semibold hover:bg-purple-600/20 hover:text-white transition">
+            <button className="px-8 cursor-pointer py-4 rounded-xl border border-purple-400 text-purple-300 font-semibold hover:bg-purple-600/20 hover:text-white transition">
               Explore Services
             </button>
           </div>
@@ -51,8 +51,8 @@ const Banner = () => {
               alt="Smart Salon"
               className="rounded-3xl shadow-[0_0_30px_rgba(168,85,247,0.6)] w-[420px] lg:w-[520px] border border-purple-700/50"
             />
-            <Sparkles className="absolute top-[-25px] right-[-25px] text-yellow-400 w-14 h-14 animate-ping" />
-            <Scissors className="absolute bottom-[-25px] left-[-25px] text-pink-500 w-14 h-14 animate-bounce" />
+            {/* <Sparkles className="absolute top-[-25px] right-[-25px] text-yellow-400 w-14 h-14 animate-ping" /> */}
+            {/* <Scissors className="absolute bottom-[-25px] left-[-25px] text-pink-500 w-14 h-14 animate-bounce" /> */}
           </div>
         </motion.div>
       </div>
