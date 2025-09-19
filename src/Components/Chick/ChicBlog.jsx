@@ -1,25 +1,18 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import useAuth from "../../hooks/useAuth";
 
 const ChicBlog = () => {
+  const {user}= useAuth()
+  console.log(user.email,)
   const [isOpen, setIsOpen] = useState(false);
   const [postData, setPostData] = useState({
     title: "",
     content: "",
+    email: user.email
   });
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "Welcome to ChicBlog ✨",
-      content: "এখানে সবাই নিজেদের blog লিখতে পারবে!",
-    },
-    {
-      id: 2,
-      title: "AI Suggestion Coming Soon 🤖",
-      content: "Blog লেখার সময় AI সাহায্য করবে।",
-    },
-  ]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,8 +40,6 @@ const ChicBlog = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-800/20 via-transparent to-pink-700/10 animate-pulse"></div>
 
       <div className="relative max-w-5xl mx-auto px-6">
-        
-
         {/* Input Field to Open Slider Form */}
         <div className="text-center mb-10">
           <motion.input
@@ -86,6 +77,7 @@ const ChicBlog = () => {
                 />
               </div>
 
+              {/* Content */}
               <div>
                 <label className="block text-gray-300 mb-2">Content</label>
                 <textarea
@@ -97,6 +89,37 @@ const ChicBlog = () => {
                   className="w-full px-4 py-3 rounded-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required
                 ></textarea>
+              </div>
+
+              {/* Image Upload */}
+              <div className="mt-4 cursor-pointer">
+                <label className="block text-gray-300 mb-2">Upload Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 cursor-pointer rounded-xl bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                />
+              </div>
+
+              {/* Category Select */}
+              <div className="mt-4">
+                <label className="block text-gray-300 mb-2">Category</label>
+                <select
+                  name="category"
+                  value={postData.category}
+                  onChange={handleChange}
+                  className="w-full px-4 cursor-pointer py-3 rounded-xl bg-gray-800 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select a category</option>
+                  <option value="technology">Technology</option>
+                  <option value="lifestyle">Lifestyle</option>
+                  <option value="travel">Travel</option>
+                  <option value="health">Health</option>
+                  <option value="education">Education</option>
+                </select>
               </div>
 
               <motion.button
